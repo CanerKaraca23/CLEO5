@@ -17,6 +17,10 @@ workspace "CLEO5"
 
     -- Common compiler settings
     warnings "Extra"                        -- /W4
+    disablewarnings {
+        "4100", "4458", "4505", "4245", "4244", 
+        "4201", "4189", "4389", "4456", "4459", "4740"
+    }
     buildoptions { "/Zc:threadSafeInit-" }  -- Disable thread-safe static init
     multiprocessorcompile "On"               -- /MP
 
@@ -231,7 +235,7 @@ local function setup_cleo_plugin(name, dir, target)
 
         includedirs { "cleo_sdk" }
         libdirs { "cleo_sdk" }
-        links { "cleo" }
+        links { "CLEO5" }
 
         files { "cleo_plugins/Resource.rc" }
 
