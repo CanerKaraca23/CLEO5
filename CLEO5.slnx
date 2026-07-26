@@ -2,10 +2,7 @@
   <Configurations>
     <BuildType Name="Debug" />
     <BuildType Name="Release" />
-    <Platform Name="GTASA" />
+    <Platform Name="Win32" />
   </Configurations>
-  <Project Path="CLEO5.vcxproj">
-    <Configuration Solution="Debug|GTASA" Project="Debug|Win32" />
-    <Configuration Solution="Release|GTASA" Project="Release|Win32" />
-  </Project>
+  <Project Path="CLEO5.vcxproj" />
 </Solution>
