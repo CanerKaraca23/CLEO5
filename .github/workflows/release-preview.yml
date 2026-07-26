@@ -70,7 +70,7 @@ jobs:
         shell: cmd
         run: |
           @echo off
-          msbuild CLEO5.sln /property:Configuration=Release /property:Platform=Win32 /m /fileLogger1 /fileLoggerParameters1:warningsOnly;errorsOnly;logfile=output.log
+          msbuild CLEO5.slnx /property:Configuration=Release /property:Platform=Win32 /m /fileLogger1 /fileLoggerParameters1:warningsOnly;errorsOnly;logfile=output.log
           node .github/workflows/analyze-build-log.js "Build"
 
       - name: Gather output files
