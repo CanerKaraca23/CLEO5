@@ -77,7 +77,7 @@ jobs:
         run: |
           @echo off
           set PLUGIN_SDK_DIR=%GITHUB_WORKSPACE%\third-party\plugin-sdk
-          msbuild cleo_plugins/CLEO_Plugins.slnx /property:Configuration=Release /property:Platform=x86 /m /fileLogger1 /fileLoggerParameters1:warningsOnly;errorsOnly;logfile=output.log
+          msbuild cleo_plugins/CLEO_Plugins.slnx /property:Configuration=Release /property:Platform=Win32 /m /fileLogger1 /fileLoggerParameters1:warningsOnly;errorsOnly;logfile=output.log
           node .github/workflows/analyze-build-log.js "Plugins compilation"
 
       - name: Plugins - VirusTotal scan
