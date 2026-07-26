@@ -16,8 +16,7 @@ workspace "CLEO5"
     staticruntime "On"
 
     -- Common compiler settings
-    warnings "High"                         -- /W3
-    fatalwarnings { "Compile" }             -- /WX
+    warnings "Extra"                        -- /W4
     buildoptions { "/Zc:threadSafeInit-" }  -- Disable thread-safe static init
     multiprocessorcompile "On"               -- /MP
 
