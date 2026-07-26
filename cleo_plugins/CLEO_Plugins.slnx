@@ -1,0 +1,11 @@
+<Solution>
+  <Project Path="FileSystemOperations\FileSystemOperations.vcxproj" />
+  <Project Path="IniFiles\IniFiles.vcxproj" />
+  <Project Path="DebugUtils\DebugUtils.vcxproj" />
+  <Project Path="MemoryOperations\MemoryOperations.vcxproj" />
+  <Project Path="Audio\Audio.vcxproj" />
+  <Project Path="Text\Text.vcxproj" />
+  <Project Path="Math\Math.vcxproj" />
+  <Project Path="GameEntities\GameEntities.vcxproj" />
+  <Project Path="Input\Input.vcxproj" />
+</Solution>
