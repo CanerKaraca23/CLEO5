@@ -1,4 +1,9 @@
 <Solution>
+  <Configurations>
+    <BuildType Name="Debug" />
+    <BuildType Name="Release" />
+    <Platform Name="Win32" />
+  </Configurations>
   <Project Path="FileSystemOperations\FileSystemOperations.vcxproj" />
   <Project Path="IniFiles\IniFiles.vcxproj" />
   <Project Path="DebugUtils\DebugUtils.vcxproj" />
