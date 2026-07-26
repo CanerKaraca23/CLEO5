@@ -55,7 +55,7 @@ jobs:
         run: |
           @echo off
           set PLUGIN_SDK_DIR=%GITHUB_WORKSPACE%\third-party\plugin-sdk
-          msbuild CLEO5.sln /property:Configuration=Release /property:Platform=GTASA /m /fileLogger1 /fileLoggerParameters1:warningsOnly;errorsOnly;logfile=output.log
+          msbuild CLEO5.slnx /property:Configuration=Release /property:Platform=GTASA /m /fileLogger1 /fileLoggerParameters1:warningsOnly;errorsOnly;logfile=output.log
           node .github/workflows/analyze-build-log.js "Core compilation"
 
       - name: Core - VirusTotal scan
