@@ -13,9 +13,7 @@ on:
       - '**.def'
       - '**.lib'
       - '**.rc'
-      - '**.vcproj'
-      - '**.vcxproj.filters'
-      - '**.sln'
+      - '**.lua'
       - '**.yml'
 
 permissions:
@@ -46,17 +44,20 @@ jobs:
       - name: Set up MsBuild
         uses: microsoft/setup-msbuild@v3
 
+      - name: Generate VS2026 project files
+        shell: cmd
+        run: premake5 vs2026
+
       - name: Tag with current commit SHA
         id: custom_build
         run: node.exe .github/workflows/tag-custom-build.js
 
-      - name: Core - Build
+      - name: Build
         shell: cmd
         run: |
           @echo off
-          set PLUGIN_SDK_DIR=%GITHUB_WORKSPACE%\third-party\plugin-sdk
-          msbuild CLEO5.slnx /property:Configuration=Release /property:Platform=Win32 /m /fileLogger1 /fileLoggerParameters1:warningsOnly;errorsOnly;logfile=output.log
-          node .github/workflows/analyze-build-log.js "Core compilation"
+          msbuild CLEO5.sln /property:Configuration=Release /property:Platform=Win32 /m /fileLogger1 /fileLoggerParameters1:warningsOnly;errorsOnly;logfile=output.log
+          node .github/workflows/analyze-build-log.js "Build"
 
       - name: Core - VirusTotal scan
         id: scan_core
@@ -72,14 +73,6 @@ jobs:
         if: steps.scan_core.outcome == 'success'
         run: echo "::notice title=CLEO Core virus scan::${{steps.scan_core.outputs.analysis}}"
 
-      - name: Plugins - Build
-        shell: cmd
-        run: |
-          @echo off
-          set PLUGIN_SDK_DIR=%GITHUB_WORKSPACE%\third-party\plugin-sdk
-          msbuild cleo_plugins/CLEO_Plugins.slnx /property:Configuration=Release /property:Platform=Win32 /m /fileLogger1 /fileLoggerParameters1:warningsOnly;errorsOnly;logfile=output.log
-          node .github/workflows/analyze-build-log.js "Plugins compilation"
-
       - name: Plugins - VirusTotal scan
         id: scan_plugins
         env:
@@ -92,7 +85,7 @@ jobs:
 
       - name: Plugins - VirusTotal log
         if: steps.scan_plugins.outcome == 'success'
-        run: echo "::notice title=CLEO Core virus scan::${{steps.scan_plugins.outputs.analysis}}"
+        run: echo "::notice title=CLEO Plugins virus scan::${{steps.scan_plugins.outputs.analysis}}"
 
       - name: Gather output files
         shell: cmd

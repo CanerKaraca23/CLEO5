@@ -1,3 +1,10 @@
+# Premake generated
+*.sln
+*.vcxproj
+*.vcxproj.filters
+*.vcxproj.user
+
+# Build output
 build/
 .output/
 *.APS

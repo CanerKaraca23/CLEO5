@@ -60,23 +60,18 @@ jobs:
         if: ${{ hashFiles('preview_changes.md') != '' }}
         uses: microsoft/setup-msbuild@v3
 
-      - name: Build CLEO Core
+      - name: Generate VS2026 project files
         if: ${{ hashFiles('preview_changes.md') != '' }}
         shell: cmd
-        run: |
-          @echo off
-          set PLUGIN_SDK_DIR=%GITHUB_WORKSPACE%\third-party\plugin-sdk
-          msbuild CLEO5.sln /property:Configuration=Release /property:Platform=GTASA /m /fileLogger1 /fileLoggerParameters1:warningsOnly;errorsOnly;logfile=output.log
-          node .github/workflows/analyze-build-log.js "Core compilation"
+        run: premake5 vs2026
 
-      - name: Build CLEO Plugins
+      - name: Build
         if: ${{ hashFiles('preview_changes.md') != '' }}
         shell: cmd
         run: |
           @echo off
-          set PLUGIN_SDK_DIR=%GITHUB_WORKSPACE%\third-party\plugin-sdk
-          msbuild cleo_plugins/CLEO_Plugins.sln /property:Configuration=Release /property:Platform=x86 /m /fileLogger1 /fileLoggerParameters1:warningsOnly;errorsOnly;logfile=output.log
-          node .github/workflows/analyze-build-log.js "Plugins compilation"
+          msbuild CLEO5.sln /property:Configuration=Release /property:Platform=Win32 /m /fileLogger1 /fileLoggerParameters1:warningsOnly;errorsOnly;logfile=output.log
+          node .github/workflows/analyze-build-log.js "Build"
 
       - name: Gather output files
         if: ${{ hashFiles('preview_changes.md') != '' }}

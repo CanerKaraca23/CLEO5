@@ -1,7 +1,40 @@
 # CLEO project configuration
 
-This project depends on Plugin SDK (https://github.com/DK22Pac/plugin-sdk). Using SDK's installer results in creation of PLUGIN_SDK_DIR envinroment variable in operating system. If installer is not used then please manually enter path to the sdk directory in setup_env.bat.
-If GTA SA is installed in different than default location please open setup_env.bat file and configure correct path.
-Run setup_env.bat to setup required envinroment variables.
+## Prerequisites
+- [Premake5](https://premake.github.io/) (included in the repository as `premake5.exe`)
+- [Visual Studio 2026](https://visualstudio.microsoft.com/)
+- Git (with submodule support)
 
-After opening project solution in Visual Studio it should be possible to build as well as debug CLEO in game.
+## Setup
+
+1. Clone the repository with submodules:
+   ```
+   git clone --recursive https://github.com/user/CLEO5.git
+   ```
+   If already cloned without submodules:
+   ```
+   git submodule update --init --recursive
+   ```
+
+2. Generate Visual Studio project files:
+   ```
+   premake5 vs2026
+   ```
+
+3. Open the generated `CLEO5.sln` in Visual Studio 2026.
+
+4. Build the solution (Debug or Release configuration).
+
+## Output
+
+- **CLEO5 Core**: `.output/<Configuration>/CLEO.asi`
+- **Plugins**: `cleo_plugins/.output/SA.<PluginName>.cleo`
+
+## Optional: Game integration
+
+Set the `GTA_SA_DIR` environment variable to your GTA San Andreas installation directory. Post-build events will automatically copy built files to the game directory.
+
+If GTA SA is installed in a non-default location, set the environment variable manually:
+```
+setx GTA_SA_DIR "C:\path\to\GTA San Andreas"
+```
