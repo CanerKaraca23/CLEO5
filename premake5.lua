@@ -67,7 +67,7 @@ project "CLEO5"
     -- TARGET_NAME is only used by RC via TO_STR() stringification macro.
     -- C++ code does not reference it. Using buildoptions for C++ compiler
     -- so it doesn't conflict with the RC preprocessor.
-    buildoptions { '/DTARGET_NAME=R"(CLEO)"' }
+    buildoptions { '/DTARGET_NAME=R\\"(CLEO)\\"' }
 
     includedirs {
         "third-party/simdjson/singleheader",
@@ -224,7 +224,7 @@ local function setup_cleo_plugin(name, dir, target)
         objdir("cleo_plugins/" .. dir .. "/.obj/%{cfg.buildcfg}")
 
         -- C++ compiler: TARGET_NAME as raw string literal
-        buildoptions { '/DTARGET_NAME=R"(' .. target .. ')"' }
+        buildoptions { '/DTARGET_NAME=R\\"(' .. target .. ')\\"' }
 
         -- RC resource compiler: TARGET_NAME as plain filename for TO_STR()
         resdefines { "TARGET_NAME=" .. target .. ".cleo" }
