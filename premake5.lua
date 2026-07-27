@@ -38,7 +38,8 @@ workspace "CLEO5"
         stringpooling "On"
         largeaddressaware "On"
         omitframepointer "On"
-        buildoptions { "/Oi", "/Gw" }
+        floatingpoint "Fast"
+        buildoptions { "/Oi", "/Gw", "/Qpar" }
         linktimeoptimization "On"
 
     filter {}
