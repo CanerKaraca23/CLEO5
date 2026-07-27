@@ -17,10 +17,6 @@ workspace "CLEO5"
 
     -- Common compiler settings
     warnings "Extra"                        -- /W4
-    disablewarnings {
-        "4100", "4458", "4505", "4245", "4244", 
-        "4201", "4189", "4389", "4456", "4459", "4740"
-    }
     buildoptions { "/Zc:threadSafeInit-" }  -- Disable thread-safe static init
     multiprocessorcompile "On"               -- /MP
 
@@ -163,11 +159,12 @@ project "CLEO5"
     -- Per-file: Disable PCH and warning 4073 for plugin-sdk sources
     filter "files:third-party/plugin-sdk/**.cpp"
         enablepch "Off"
-        disablewarnings { "4073" }
+        disablewarnings { "4073", "4100", "4458", "4505", "4245", "4244", "4201", "4189", "4389", "4456", "4459", "4740" }
 
     -- Per-file: Disable PCH for simdjson
     filter "files:third-party/simdjson/**.cpp"
         enablepch "Off"
+        disablewarnings { "4100", "4458", "4505", "4245", "4244", "4201", "4189", "4389", "4456", "4459", "4740" }
 
     -- Per-file: Disable PCH for standalone source files
     filter "files:source/crc32.cpp"
@@ -181,7 +178,7 @@ project "CLEO5"
     -- Release-specific settings
     filter "configurations:Release"
         rtti "Off"
-        linkoptions { "/SAFESEH:NO", "/MANIFEST:NO" }
+        linkoptions { "/SAFESEH:NO", "/MANIFEST:NO", "/ignore:4075" }
         buildoptions { "/sdl" }
 
         postbuildcommands {
@@ -248,7 +245,7 @@ local function setup_cleo_plugin(name, dir, target)
         -- Per-file: Disable PCH and warning 4073 for plugin-sdk sources
         filter "files:third-party/plugin-sdk/**.cpp"
             enablepch "Off"
-            disablewarnings { "4073" }
+            disablewarnings { "4073", "4100", "4458", "4505", "4245", "4244", "4201", "4189", "4389", "4456", "4459", "4740" }
         filter {}
 
         -- Post-build: copy to game directory if available
