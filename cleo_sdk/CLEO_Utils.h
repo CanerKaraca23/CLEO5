@@ -709,27 +709,27 @@ namespace CLEO
 
 #define TRACE(format, ...)                                                                                             \
     {                                                                                                                  \
-        CLEO::Trace(CLEO::eLogLevel::Default, format __VA_OPT__(,) __VA_ARGS__);                                       \
+        CLEO::Trace(CLEO::eLogLevel::Default, format __VA_OPT__(, ) __VA_ARGS__);                                      \
     }
 #define LOG_WARNING(script, format, ...)                                                                               \
     {                                                                                                                  \
-        CLEO::Trace(script, CLEO::eLogLevel::Error, format __VA_OPT__(,) __VA_ARGS__);                                 \
+        CLEO::Trace(script, CLEO::eLogLevel::Error, format __VA_OPT__(, ) __VA_ARGS__);                                \
     }
 #define SHOW_ERROR(a, ...)                                                                                             \
     {                                                                                                                  \
-        CLEO::ShowError(a __VA_OPT__(,) __VA_ARGS__);                                                                  \
+        CLEO::ShowError(a __VA_OPT__(, ) __VA_ARGS__);                                                                 \
     }
 
 #define SUSPEND(...)                                                                                                   \
     {                                                                                                                  \
-        return CLEO::TrySuspendScript(thread, false __VA_OPT__(,) __VA_ARGS__);                                        \
+        return CLEO::TrySuspendScript(thread, false __VA_OPT__(, ) __VA_ARGS__);                                       \
     }
 
 #define SUSPEND_COMPAT(...)                                                                                            \
     {                                                                                                                  \
         if (IsStrictValidation(thread))                                                                                \
         {                                                                                                              \
-            return CLEO::TrySuspendScript(thread, true, __VA_ARGS__);                                                  \
+            return CLEO::TrySuspendScript(thread, true __VA_OPT__(, ) __VA_ARGS__);                                    \
         }                                                                                                              \
     }
 
