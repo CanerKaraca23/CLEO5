@@ -1,6 +1,9 @@
 #include "OpcodeInfoDatabase.h"
 #include "..\cleo_sdk\CLEO_Utils.h"
+#pragma warning(push)
+#pragma warning(disable: 4244)
 #include <simdjson.h>
+#pragma warning(pop)
 #include <algorithm>
 #include <fstream>
 

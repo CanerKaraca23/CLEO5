@@ -347,6 +347,7 @@ setup_cleo_plugin("DebugUtils", "DebugUtils", "SA.DebugUtils")
     -- simdjson also needs NoPCH
     filter "files:third-party/simdjson/**.cpp"
         enablepch "Off"
+        disablewarnings { "4100", "4458", "4505", "4245", "4244", "4201", "4189", "4389", "4456", "4459", "4740" }
     filter {}
 
 
