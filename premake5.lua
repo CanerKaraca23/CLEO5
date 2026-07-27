@@ -34,11 +34,13 @@ workspace "CLEO5"
         defines { "_NDEBUG" }
         symbols "Off"
         runtime "Release"
-        omitframepointer "On"
+        rtti "Off"
         buildoptions { "/Gw" }
         linktimeoptimization "On"
 
     filter {}
+
+    linkoptions { "/SAFESEH:NO", "/MANIFEST:NO" }
 
 project "CLEO5"
     kind "SharedLib"
@@ -90,11 +92,9 @@ project "CLEO5"
 
     filter {}
 
-    linkoptions { "/SAFESEH:NO", "/MANIFEST:NO" }
     buildoptions { "/sdl" }
     
     filter "configurations:Release"
-        rtti "Off"
         linkoptions { "/ignore:4075" }
 
     filter {}
@@ -125,7 +125,10 @@ local function setup_cleo_plugin(name)
         objdir("cleo_plugins/" .. name .. "/.obj/%{cfg.buildcfg}")
 
         buildoptions { '/DTARGET_NAME=R\\"(' .. target .. ')\\"' }
-        resdefines { "TARGET_NAME=" .. target .. ".cleo" }
+        resdefines { 
+            "TARGET_NAME=" .. target .. ".cleo",
+            "PLUGIN_DESC=" .. name .. " Plugin"
+        }
 
         includedirs { "cleo_sdk" }
         links { "CLEO5" }
