@@ -709,20 +709,20 @@ namespace CLEO
 
 #define TRACE(format, ...)                                                                                             \
     {                                                                                                                  \
-        CLEO::Trace(CLEO::eLogLevel::Default, format, __VA_ARGS__);                                                    \
+        CLEO::Trace(CLEO::eLogLevel::Default, format __VA_OPT__(,) __VA_ARGS__);                                       \
     }
 #define LOG_WARNING(script, format, ...)                                                                               \
     {                                                                                                                  \
-        CLEO::Trace(script, CLEO::eLogLevel::Error, format, __VA_ARGS__);                                              \
+        CLEO::Trace(script, CLEO::eLogLevel::Error, format __VA_OPT__(,) __VA_ARGS__);                                 \
     }
 #define SHOW_ERROR(a, ...)                                                                                             \
     {                                                                                                                  \
-        CLEO::ShowError(a, __VA_ARGS__);                                                                               \
+        CLEO::ShowError(a __VA_OPT__(,) __VA_ARGS__);                                                                  \
     }
 
 #define SUSPEND(...)                                                                                                   \
     {                                                                                                                  \
-        return CLEO::TrySuspendScript(thread, false, __VA_ARGS__);                                                     \
+        return CLEO::TrySuspendScript(thread, false __VA_OPT__(,) __VA_ARGS__);                                        \
     }
 
 #define SUSPEND_COMPAT(...)                                                                                            \
@@ -1065,7 +1065,7 @@ namespace CLEO
 
 #define OPCODE_READ_PARAM_STRING(_varName)                                                                             \
     char _buff_##_varName[MAX_STR_LEN + 1];                                                                            \
-    const char*##_varName = _readParamText(thread, _buff_##_varName, MAX_STR_LEN + 1);                                 \
+    const char* _varName = _readParamText(thread, _buff_##_varName, MAX_STR_LEN + 1);                                  \
     if (!_paramWasString())                                                                                            \
     {                                                                                                                  \
         return OpcodeResult::OR_INTERRUPT;                                                                             \
@@ -1073,8 +1073,8 @@ namespace CLEO
 
 #define OPCODE_READ_PARAM_STRING_LEN(_varName, _maxLen)                                                                \
     char _buff_##_varName[_maxLen + 1];                                                                                \
-    const char*##_varName = _readParamText(thread, _buff_##_varName, _maxLen + 1);                                     \
-    if (##_varName != nullptr) ##_varName = _buff_##_varName;                                                          \
+    const char* _varName = _readParamText(thread, _buff_##_varName, _maxLen + 1);                                      \
+    if (_varName != nullptr) _varName = _buff_##_varName;                                                              \
     if (!_paramWasString())                                                                                            \
     {                                                                                                                  \
         return OpcodeResult::OR_INTERRUPT;                                                                             \
