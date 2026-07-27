@@ -103,6 +103,7 @@ class DebugUtils
 
     static void WINAPI OnGameBegin(DWORD saveSlot)
     {
+        (void)saveSlot;
         screenLog.Clear();
         SetCurrScript(nullptr);
     }

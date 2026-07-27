@@ -261,25 +261,25 @@ void CAudioStream::Process()
 
     if (state != Playing) return; // done
 
-    float volume = CalculateVolume();
-    BASS_ChannelSetAttribute(streamInternal, BASS_ATTRIB_VOL, volume);
+    float vol = CalculateVolume();
+    BASS_ChannelSetAttribute(streamInternal, BASS_ATTRIB_VOL, vol);
 
     float freq = rate * CalculateSpeed();
     freq       = std::max(freq, 0.000001f); // 0 results in original speed
     BASS_ChannelSetAttribute(streamInternal, BASS_ATTRIB_FREQ, freq);
 }
 
-void CAudioStream::Set3dPosition(const CVector& pos)
+void CAudioStream::Set3dPosition(const CVector& /*pos*/)
 {
     // not applicable for 2d audio
 }
 
-void CAudioStream::Set3dSourceSize(float radius)
+void CAudioStream::Set3dSourceSize(float /*radius*/)
 {
     // not applicable for 2d audio
 }
 
-void CAudioStream::SetHost(CEntity* placable, const CVector& offset)
+void CAudioStream::SetHost(CEntity* /*placable*/, const CVector& /*offset*/)
 {
     // not applicable for 2d audio
 }

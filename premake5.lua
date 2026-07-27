@@ -17,6 +17,7 @@ workspace "CLEO5"
 
     -- Common compiler settings
     warnings "Extra"                        -- /W4
+    disablewarnings { "4100", "4245", "4244", "4201", "4189", "4389", "4456", "4459" }
     buildoptions { "/Zc:threadSafeInit-" }  -- Disable thread-safe static init
     multiprocessorcompile "On"               -- /MP
 

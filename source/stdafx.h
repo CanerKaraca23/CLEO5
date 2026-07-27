@@ -29,10 +29,8 @@
 #include "..\cleo_sdk\CLEO.h"
 #include "..\cleo_sdk\CLEO_Utils.h"
 #include "CConfigManager.h"
-#pragma warning(push)
-#pragma warning(disable: 4244)
 #include "simdjson.h"
-#pragma warning(pop)
+
 
 #include <plugin.h>
 #include <CFont.h>

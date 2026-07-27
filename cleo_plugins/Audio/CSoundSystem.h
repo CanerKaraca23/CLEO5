@@ -59,23 +59,23 @@ namespace CLEO
         void Process();
     };
 
-    static bool isNetworkSource(const char* path)
+    inline static bool isNetworkSource(const char* path)
     {
         return _strnicmp("http:", path, 5) == 0 || _strnicmp("https:", path, 6) == 0;
     }
-    static float dot(CVector a, CVector b)
+    inline static float dot(CVector a, CVector b)
     {
         return a.x * b.x + a.y * b.y + a.z * b.z;
     }
-    static float lerp(float a, float b, float progress)
+    inline static float lerp(float a, float b, float progress)
     {
         return a * (1.0f - progress) + b * progress;
     }
-    static CVector lerp(CVector a, CVector b, float progress)
+    inline static CVector lerp(CVector a, CVector b, float progress)
     {
         return a * (1.0f - progress) + b * progress;
     }
-    static BASS_3DVECTOR toBass(const CVector& v)
+    inline static BASS_3DVECTOR toBass(const CVector& v)
     {
         return BASS_3DVECTOR(v.x, v.z, v.y);
     } // convert GTA to BASS coordinate system
