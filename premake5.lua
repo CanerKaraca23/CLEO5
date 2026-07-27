@@ -87,11 +87,7 @@ project "CLEO5"
         "third-party/simpleini/SimpleIni.h",
     }
 
-    filter "files:third-party/**.cpp"
-        enablepch "Off"
-    filter "files:source/crc32.cpp"
-        enablepch "Off"
-    filter "files:source/OpcodeInfoDatabase.cpp"
+    filter "files:third-party/**.cpp or files:source/crc32.cpp or files:source/OpcodeInfoDatabase.cpp"
         enablepch "Off"
 
     filter {}
@@ -120,14 +116,15 @@ project "CLEO5"
     debugcommand "$(GTA_SA_DIR)\\gta_sa.exe"
     debugdir "$(GTA_SA_DIR)"
 
-local function setup_cleo_plugin(name, dir, target)
+local function setup_cleo_plugin(name)
+    local target = "SA." .. name
     project(name)
         kind "SharedLib"
         characterset "MBCS"
         targetname(target)
         targetextension ".cleo"
         targetdir "cleo_plugins/.output"
-        objdir("cleo_plugins/" .. dir .. "/.obj/%{cfg.buildcfg}")
+        objdir("cleo_plugins/" .. name .. "/.obj/%{cfg.buildcfg}")
 
         buildoptions { '/DTARGET_NAME=R\\"(' .. target .. ')\\"' }
         resdefines { "TARGET_NAME=" .. target .. ".cleo" }
@@ -138,8 +135,8 @@ local function setup_cleo_plugin(name, dir, target)
 
         files { 
             "cleo_plugins/Resource.rc",
-            "cleo_plugins/" .. dir .. "/**.cpp",
-            "cleo_plugins/" .. dir .. "/**.h"
+            "cleo_plugins/" .. name .. "/**.cpp",
+            "cleo_plugins/" .. name .. "/**.h"
         }
 
         resincludedirs { "cleo_sdk", "source" }
@@ -152,7 +149,7 @@ local function setup_cleo_plugin(name, dir, target)
         debugdir "$(GTA_SA_DIR)"
 end
 
-setup_cleo_plugin("Audio", "Audio", "SA.Audio")
+setup_cleo_plugin("Audio")
     includedirs { "cleo_plugins/Audio/bass" }
     libdirs { "cleo_plugins/Audio/bass" }
     links { "bass" }
@@ -172,7 +169,7 @@ setup_cleo_plugin("Audio", "Audio", "SA.Audio")
         "third-party/plugin-sdk/shared/game/CRGBA.cpp",
     }
 
-setup_cleo_plugin("DebugUtils", "DebugUtils", "SA.DebugUtils")
+setup_cleo_plugin("DebugUtils")
     includedirs { "source", "third-party/simdjson/singleheader" }
     files {
         "source/crc32.cpp",
@@ -195,9 +192,9 @@ setup_cleo_plugin("DebugUtils", "DebugUtils", "SA.DebugUtils")
         "third-party/plugin-sdk/shared/game/CRGBA.cpp",
     }
 
-setup_cleo_plugin("FileSystemOperations", "FileSystemOperations", "SA.FileSystemOperations")
+setup_cleo_plugin("FileSystemOperations")
 
-setup_cleo_plugin("GameEntities", "GameEntities", "SA.GameEntities")
+setup_cleo_plugin("GameEntities")
     files {
         "third-party/plugin-sdk/plugin_sa/game_sa/CAESound.cpp",
         "third-party/plugin-sdk/plugin_sa/game_sa/CAEWeaponAudioEntity.cpp",
@@ -217,9 +214,9 @@ setup_cleo_plugin("GameEntities", "GameEntities", "SA.GameEntities")
         "third-party/plugin-sdk/shared/game/CRGBA.cpp",
     }
 
-setup_cleo_plugin("IniFiles", "IniFiles", "SA.IniFiles")
+setup_cleo_plugin("IniFiles")
 
-setup_cleo_plugin("Input", "Input", "SA.Input")
+setup_cleo_plugin("Input")
     files {
         "third-party/plugin-sdk/plugin_sa/game_sa/CCheat.cpp",
         "third-party/plugin-sdk/plugin_sa/game_sa/CControllerConfigManager.cpp",
@@ -232,9 +229,9 @@ setup_cleo_plugin("Input", "Input", "SA.Input")
         "third-party/plugin-sdk/shared/Patch.cpp",
     }
 
-setup_cleo_plugin("Math", "Math", "SA.Math")
+setup_cleo_plugin("Math")
 
-setup_cleo_plugin("MemoryOperations", "MemoryOperations", "SA.MemoryOperations")
+setup_cleo_plugin("MemoryOperations")
     files {
         "third-party/plugin-sdk/plugin_sa/game_sa/CPools.cpp",
         "third-party/plugin-sdk/plugin_sa/game_sa/CTheScripts.cpp",
@@ -245,9 +242,11 @@ setup_cleo_plugin("MemoryOperations", "MemoryOperations", "SA.MemoryOperations")
         "third-party/plugin-sdk/shared/game/CRGBA.cpp",
     }
 
-setup_cleo_plugin("Text", "Text", "SA.Text")
+setup_cleo_plugin("Text")
     links { "Shlwapi" }
+    includedirs { "source" }
     files {
+        "source/crc32.cpp",
         "third-party/plugin-sdk/plugin_sa/game_sa/CBaseModelInfo.cpp",
         "third-party/plugin-sdk/plugin_sa/game_sa/CGame.cpp",
         "third-party/plugin-sdk/plugin_sa/game_sa/CHud.cpp",
