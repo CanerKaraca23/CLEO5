@@ -40,7 +40,7 @@ workspace "CLEO5"
 
     filter {}
 
-    linkoptions { "/SAFESEH:NO", "/MANIFEST:NO", "/ignore:4075" }
+    linkoptions { "/ignore:4075" }
 
 project "CLEO5"
     kind "SharedLib"
