@@ -34,6 +34,7 @@ workspace "CLEO5"
         defines { "_NDEBUG" }
         symbols "Off"
         runtime "Release"
+        omitframepointer "On"
         buildoptions { "/Gw" }
         linktimeoptimization "On"
 
