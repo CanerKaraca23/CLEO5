@@ -31,7 +31,6 @@
 #include "CConfigManager.h"
 #include "simdjson.h"
 
-
 #include <plugin.h>
 #include <CFont.h>
 #include <CGame.h>
