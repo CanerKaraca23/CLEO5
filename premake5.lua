@@ -35,8 +35,7 @@ workspace "CLEO5"
         symbols "Off"
         runtime "Release"
         rtti "Off"
-        flags { "NoBufferSecurityCheck" }
-        buildoptions { "/Gw", "/Zc:__cplusplus", "/cgthreads8", "/permissive-", "/Zc:preprocessor", "/Ob3" }
+        buildoptions { "/Gw", "/Zc:__cplusplus", "/cgthreads8", "/permissive-", "/Zc:preprocessor" }
         linktimeoptimization "On"
 
     filter {}
@@ -93,7 +92,7 @@ project "CLEO5"
 
     filter {}
 
-    -- buildoptions { "/sdl" }
+    buildoptions { "/sdl" }
     
     filter {}
 
