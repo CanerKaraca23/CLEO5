@@ -1,0 +1,8 @@
+<Solution>
+  <Configurations>
+    <BuildType Name="Debug" />
+    <BuildType Name="Release" />
+    <Platform Name="Win32" />
+  </Configurations>
+  <Project Path="CLEO5.vcxproj" />
+</Solution>

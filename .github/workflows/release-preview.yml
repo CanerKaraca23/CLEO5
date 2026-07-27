@@ -66,7 +66,7 @@ jobs:
         run: |
           @echo off
           set PLUGIN_SDK_DIR=%GITHUB_WORKSPACE%\third-party\plugin-sdk
-          msbuild CLEO5.sln /property:Configuration=Release /property:Platform=GTASA /m /fileLogger1 /fileLoggerParameters1:warningsOnly;errorsOnly;logfile=output.log
+          msbuild CLEO5.slnx /property:Configuration=Release /property:Platform=Win32 /m /fileLogger1 /fileLoggerParameters1:warningsOnly;errorsOnly;logfile=output.log
           node .github/workflows/analyze-build-log.js "Core compilation"
 
       - name: Build CLEO Plugins
@@ -75,7 +75,7 @@ jobs:
         run: |
           @echo off
           set PLUGIN_SDK_DIR=%GITHUB_WORKSPACE%\third-party\plugin-sdk
-          msbuild cleo_plugins/CLEO_Plugins.sln /property:Configuration=Release /property:Platform=x86 /m /fileLogger1 /fileLoggerParameters1:warningsOnly;errorsOnly;logfile=output.log
+          msbuild cleo_plugins/CLEO_Plugins.slnx /property:Configuration=Release /property:Platform=Win32 /m /fileLogger1 /fileLoggerParameters1:warningsOnly;errorsOnly;logfile=output.log
           node .github/workflows/analyze-build-log.js "Plugins compilation"
 
       - name: Gather output files
@@ -101,7 +101,7 @@ jobs:
 
       - name: Pack archive
         if: ${{ hashFiles('preview_changes.md') != '' }}
-        uses: thedoctor0/zip-release@main
+        uses: thedoctor0/zip-release@b57d897cb5d60cb78b51a507f63fa184cfe35554 # 0.7.6
         with:
           type: 'zip'
           filename: 'SA.CLEO-v${{steps.custom_build.outputs.version}}-${{steps.custom_build.outputs.sha}}.zip'
@@ -118,7 +118,7 @@ jobs:
 
       - name: Create 'preview' release
         if: ${{ hashFiles('preview_changes.md') != '' }}
-        uses: ncipollo/release-action@v1
+        uses: ncipollo/release-action@339a81892b84b4eeb0f6e744e4574d79d0d9b8dd # 1.21.0
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           name: 'Next version preview'
