@@ -50,7 +50,7 @@ project "CLEO5"
     targetdir ".output/%{cfg.buildcfg}"
     objdir ".output/.obj/%{cfg.buildcfg}"
 
-    buildoptions { '/DTARGET_NAME=R\"(CLEO)\"' }
+    buildoptions { '/DTARGET_NAME=R\\"(CLEO)\\"' }
 
     includedirs {
         "third-party/simdjson/singleheader",
@@ -125,7 +125,7 @@ local function setup_cleo_plugin(name, dir, target)
         targetdir "cleo_plugins/.output"
         objdir("cleo_plugins/" .. dir .. "/.obj/%{cfg.buildcfg}")
 
-        buildoptions { '/DTARGET_NAME=R\"(' .. target .. ')\"' }
+        buildoptions { '/DTARGET_NAME=R\\"(' .. target .. ')\\"' }
         resdefines { "TARGET_NAME=" .. target .. ".cleo" }
 
         includedirs { "cleo_sdk" }
