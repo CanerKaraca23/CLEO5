@@ -2,11 +2,9 @@ workspace "CLEO5"
     configurations { "Debug", "Release" }
     platforms { "Win32" }
     architecture "x86"
-    location "."
 
     language "C++"
     cppdialect "C++latest"
-    systemversion "10.0"
     staticruntime "On"
 
     warnings "Extra"
@@ -37,7 +35,10 @@ workspace "CLEO5"
         symbols "Off"
         runtime "Release"
         functionlevellinking "On"
-        buildoptions { "/Oi" }
+        stringpooling "On"
+        largeaddressaware "On"
+        omitframepointer "On"
+        buildoptions { "/Oi", "/Gw" }
         linktimeoptimization "On"
 
     filter {}
