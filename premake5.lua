@@ -35,7 +35,7 @@ workspace "CLEO5"
         symbols "Off"
         runtime "Release"
         rtti "Off"
-        buildoptions { "/Gw", "/Zc:__cplusplus", "/cgthreads:8" }
+        buildoptions { "/Gw", "/Zc:__cplusplus", "/cgthreads8" }
         linktimeoptimization "On"
 
     filter {}
