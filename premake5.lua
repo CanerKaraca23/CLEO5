@@ -87,7 +87,11 @@ project "CLEO5"
         "third-party/simpleini/SimpleIni.h",
     }
 
-    filter { "files:third-party/**.cpp", "files:source/crc32.cpp", "files:source/OpcodeInfoDatabase.cpp" }
+    filter "files:third-party/**.cpp"
+        enablepch "Off"
+    filter "files:source/crc32.cpp"
+        enablepch "Off"
+    filter "files:source/OpcodeInfoDatabase.cpp"
         enablepch "Off"
 
     filter {}
