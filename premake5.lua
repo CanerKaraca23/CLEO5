@@ -40,7 +40,7 @@ workspace "CLEO5"
 
     filter {}
 
-    linkoptions { "/SAFESEH:NO", "/MANIFEST:NO" }
+    linkoptions { "/SAFESEH:NO", "/MANIFEST:NO", "/ignore:4075" }
 
 project "CLEO5"
     kind "SharedLib"
@@ -94,9 +94,6 @@ project "CLEO5"
 
     buildoptions { "/sdl" }
     
-    filter "configurations:Release"
-        linkoptions { "/ignore:4075" }
-
     filter {}
 
     postbuildcommands {
