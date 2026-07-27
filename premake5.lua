@@ -10,7 +10,7 @@ workspace "CLEO5"
     staticruntime "On"
 
     warnings "Extra"
-    disablewarnings { "4100", "4458", "4505", "4245", "4244", "4201", "4189", "4389", "4456", "4459" }
+    disablewarnings { "4073", "4100", "4458", "4505", "4245", "4244", "4201", "4189", "4389", "4456", "4459", "4740" }
     buildoptions { "/Zc:threadSafeInit-" }
     multiprocessorcompile "On"
 
