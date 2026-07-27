@@ -93,7 +93,7 @@ project "CLEO5"
 
     filter {}
 
-    buildoptions { "/sdl" }
+    -- buildoptions { "/sdl" }
     
     filter {}
 

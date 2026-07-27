@@ -1104,15 +1104,15 @@ namespace CLEO
 
 #define OPCODE_READ_PARAM_FILEPATH(_varName)                                                                           \
     char _buff_##_varName[512];                                                                                        \
-    const char*##_varName = _readParamText(thread, _buff_##_varName, 512);                                             \
-    if (##_varName != nullptr) ##_varName = _buff_##_varName;                                                          \
+    const char* _varName = _readParamText(thread, _buff_##_varName, 512);                                              \
+    if (_varName != nullptr) _varName = _buff_##_varName;                                                              \
     if (_paramWasString())                                                                                             \
         CLEO_ResolvePath(thread, _buff_##_varName, 512);                                                               \
     else                                                                                                               \
         return OpcodeResult::OR_INTERRUPT;                                                                             \
-    if (!FilepathIsSafe(thread, ##_varName))                                                                           \
+    if (!FilepathIsSafe(thread, _varName))                                                                             \
     {                                                                                                                  \
-        SUSPEND("Forbidden file path '%s' outside game directories", ##_varName);                                      \
+        SUSPEND("Forbidden file path '%s' outside game directories", _varName);                                        \
     }
 
 #define OPCODE_READ_PARAM_PTR()                                                                                        \

@@ -22,16 +22,16 @@ static void fixIniFilepath(char* buff)
     fixIniFilepath(_buff_##_varName)
 
 #define OPCODE_READ_PARAM_STRING_OR_ZERO(_varName)                                                                     \
-    const char*##_varName;                                                                                             \
+    const char* _varName;                                                                                              \
     if (IsLegacyScript(thread) && IsImmInteger(thread->PeekDataType()) && CLEO_PeekIntOpcodeParam(thread) == 0)        \
     {                                                                                                                  \
         CLEO_SkipOpcodeParams(thread, 1);                                                                              \
-        ##_varName = nullptr;                                                                                          \
+        _varName = nullptr;                                                                                            \
     }                                                                                                                  \
     else                                                                                                               \
     {                                                                                                                  \
         char _buff_##_varName[MAX_STR_LEN + 1];                                                                        \
-        ##_varName = _readParamText(thread, _buff_##_varName, MAX_STR_LEN + 1);                                        \
+        _varName = _readParamText(thread, _buff_##_varName, MAX_STR_LEN + 1);                                          \
         if (!_paramWasString())                                                                                        \
         {                                                                                                              \
             return OpcodeResult::OR_INTERRUPT;                                                                         \
