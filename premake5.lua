@@ -34,11 +34,7 @@ workspace "CLEO5"
         defines { "_NDEBUG" }
         symbols "Off"
         runtime "Release"
-        functionlevellinking "On"
-        stringpooling "On"
-        largeaddressaware "On"
-        omitframepointer "On"
-        buildoptions { "/Oi", "/Gw" }
+        buildoptions { "/Gw" }
         linktimeoptimization "On"
 
     filter {}
