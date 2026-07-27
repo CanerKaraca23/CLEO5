@@ -130,7 +130,6 @@ local function setup_cleo_plugin(name)
         resdefines { "TARGET_NAME=" .. target .. ".cleo" }
 
         includedirs { "cleo_sdk" }
-        libdirs { "cleo_sdk" }
         links { "CLEO5" }
 
         files { 
@@ -138,8 +137,6 @@ local function setup_cleo_plugin(name)
             "cleo_plugins/" .. name .. "/**.cpp",
             "cleo_plugins/" .. name .. "/**.h"
         }
-
-        resincludedirs { "cleo_sdk", "source" }
 
         postbuildcommands {
             'if defined GTA_SA_DIR ( taskkill /IM gta_sa.exe /F /FI "STATUS eq RUNNING" >nul 2>&1 & xcopy /Y "$(OutDir)$(TargetName).*" "$(GTA_SA_DIR)\\cleo\\cleo_plugins\\" )'
