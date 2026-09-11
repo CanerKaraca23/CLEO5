@@ -86,17 +86,17 @@ namespace CLEO
     OPCODE_READ_PARAM_OUTPUT_VAR_STRING OPCODE_WRITE_PARAM_PTR(value) // memory address
     */
 
-    static bool IsLegacyScript(CLEO::CRunningScript* script)
+    inline bool IsLegacyScript(CLEO::CRunningScript* script)
     {
         return CLEO_GetScriptVersion(script) < CLEO_VER_5;
     }
 
-    static bool IsStrictValidation(CLEO::CRunningScript* script)
+    inline bool IsStrictValidation(CLEO::CRunningScript* script)
     {
         return (CLEO_GetConfigInt("StrictValidation", 0) == 1) && !IsLegacyScript(script);
     }
 
-    static std::string StringPrintfV(const char* format, va_list args)
+    inline std::string StringPrintfV(const char* format, va_list args)
     {
         auto len = std::vsnprintf(nullptr, 0, format, args);
 
@@ -110,7 +110,7 @@ namespace CLEO
         return std::move(result);
     }
 
-    static std::string StringPrintf(const char* format, ...)
+    inline std::string StringPrintf(const char* format, ...)
     {
         va_list args;
         va_start(args, format);
@@ -119,7 +119,7 @@ namespace CLEO
         return result;
     }
 
-    static void StringAppendNum(std::string& dest, int number, int padLen = 0)
+    inline void StringAppendNum(std::string& dest, int number, int padLen = 0)
     {
         static char buff[16];
 
@@ -147,7 +147,7 @@ namespace CLEO
         }
     }
 
-    static void StringAppendHex(std::string& dest, DWORD number, int padLen = 0)
+    inline void StringAppendHex(std::string& dest, DWORD number, int padLen = 0)
     {
         static const char digits[] = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F'};
         static char buff[16];
@@ -169,7 +169,7 @@ namespace CLEO
         }
     }
 
-    static void StringAppendFloat(std::string& dest, float number, int padLen = 0)
+    inline void StringAppendFloat(std::string& dest, float number, int padLen = 0)
     {
         static char buff[64];
         auto useGeneralFormat = fabsf(number) > 1000000.0f || (number != 0.0f && fabsf(number) < 0.000001f);
@@ -206,7 +206,7 @@ namespace CLEO
         dest += buff;
     }
 
-    static bool StringStartsWith(const std::string_view str, const std::string_view prefix, bool caseSensitive = true)
+    inline bool StringStartsWith(const std::string_view str, const std::string_view prefix, bool caseSensitive = true)
     {
         if (str.length() < prefix.length())
         {
@@ -223,7 +223,7 @@ namespace CLEO
         }
     }
 
-    static bool StringEndsWith(const std::string_view str, const std::string_view suffix, bool caseSensitive = true)
+    inline bool StringEndsWith(const std::string_view str, const std::string_view suffix, bool caseSensitive = true)
     {
         if (str.length() < suffix.length())
         {
@@ -240,7 +240,7 @@ namespace CLEO
         }
     }
 
-    static void StringSplit(
+    inline void StringSplit(
         const std::string_view str, const std::string_view delimiters, std::vector<std::string>& output
     )
     {
@@ -269,7 +269,7 @@ namespace CLEO
     }
 
     // erase GTA's text formatting sequences like ~r~
-    static void StringRemoveFormatting(std::string& str)
+    inline void StringRemoveFormatting(std::string& str)
     {
         size_t pos = 0;
         while (true)
@@ -301,13 +301,13 @@ namespace CLEO
         }
     }
 
-    static void StringToLower(std::string& str)
+    inline void StringToLower(std::string& str)
     {
         std::transform(str.begin(), str.end(), str.begin(), [](unsigned char c) { return tolower(c); });
     }
 
     // remove white characters from left hand side of the string
-    static void StringTrimLeft(std::string& str)
+    inline void StringTrimLeft(std::string& str)
     {
         auto it = std::find_if(str.begin(), str.end(), [](char c) {
             return c != ' ' && c != '\t' && c != '\v' && c != '\r' && c != '\n' && c != '\f';
@@ -316,7 +316,7 @@ namespace CLEO
     }
 
     // remove white characters from right hand side of the string
-    static void StringTrimRight(std::string& str)
+    inline void StringTrimRight(std::string& str)
     {
         auto it = std::find_if(str.rbegin(), str.rend(), [](char c) {
             return c != ' ' && c != '\t' && c != '\v' && c != '\r' && c != '\n' && c != '\f';
@@ -325,13 +325,13 @@ namespace CLEO
     }
 
     // remove white characters at each end of the string
-    static void StringTrim(std::string& str)
+    inline void StringTrim(std::string& str)
     {
         StringTrimRight(str);
         StringTrimLeft(str);
     }
 
-    static std::string ScriptInfoStr(CLEO::CRunningScript* thread)
+    inline std::string ScriptInfoStr(CLEO::CRunningScript* thread)
     {
         std::string info(1024, '\0');
         CLEO_GetScriptInfoStr(thread, true, info.data(), info.length());
@@ -340,7 +340,7 @@ namespace CLEO
 
     // Normalize filepath, collapse all parent directory references, trim path separators at front and back.
     // Input should be path without expandable %variables%
-    static void FilepathNormalize(std::string& path)
+    inline void FilepathNormalize(std::string& path)
     {
         if (path.empty()) return;
 
@@ -403,7 +403,7 @@ namespace CLEO
     // strip parent prefix from filepath if present
     // 1. FilepathRemoveParent("C:\game\cleo\1.cs", "C:\game") => cleo\1.cs
     // 2. FilepathRemoveParent("C:cleo\1.cs", "C:") => cleo\1.cs
-    static void FilepathRemoveParent(std::string& path, const std::string_view base)
+    inline void FilepathRemoveParent(std::string& path, const std::string_view base)
     {
         if (path.length() < base.length()) return; // can not hold that prefix
         if (!StringStartsWith(path, base, false)) return;
@@ -420,7 +420,7 @@ namespace CLEO
     }
 
     // get path without last file/directory element
-    static const std::string_view FilepathGetParent(const std::string_view str)
+    inline const std::string_view FilepathGetParent(const std::string_view str)
     {
         auto separatorPos = str.find_last_of('\\');
 
@@ -434,7 +434,7 @@ namespace CLEO
 
     // is normalized file path inside allowed directories (game root or user files)?
     // input path is expected to be absolute or relative to game directory
-    static bool FilepathIsSafe(CLEO::CRunningScript* thread, const char* path)
+    inline bool FilepathIsSafe([[maybe_unused]] CLEO::CRunningScript* thread, const char* path)
     {
         if (path == nullptr) return false;                       // reject null path
         if (strchr(path, '%') != nullptr) return false;          // reject expandable variables
@@ -464,7 +464,7 @@ namespace CLEO
         return (checkDir(CLEO_GetGameDirectory()) || checkDir(CLEO_GetUserDirectory()));
     }
 
-    static bool IsObjectHandleValid(DWORD handle)
+    inline bool IsObjectHandleValid(DWORD handle)
     {
         // get handle info
         auto flags = handle & 0xFF;
@@ -477,7 +477,7 @@ namespace CLEO
         return true;
     }
 
-    static bool IsPedHandleValid(DWORD handle)
+    inline bool IsPedHandleValid(DWORD handle)
     {
         // get handle info
         auto flags = handle & 0xFF;
@@ -490,7 +490,7 @@ namespace CLEO
         return true;
     }
 
-    static bool IsVehicleHandleValid(DWORD handle)
+    inline bool IsVehicleHandleValid(DWORD handle)
     {
         // get handle info
         auto flags = handle & 0xFF;
@@ -503,7 +503,7 @@ namespace CLEO
         return true;
     }
 
-    static bool IsPlayerIdValid(int id)
+    inline bool IsPlayerIdValid(int id)
     {
         switch (id)
         {
@@ -516,7 +516,7 @@ namespace CLEO
         return false;
     }
 
-    static const char* TraceVArg(CLEO::eLogLevel level, const char* format, va_list args)
+    inline const char* TraceVArg(CLEO::eLogLevel level, const char* format, va_list args)
     {
         static char szBuf[1024];
         vsprintf_s(szBuf, format, args); // put params into format
@@ -524,7 +524,7 @@ namespace CLEO
         return szBuf;
     }
 
-    static void Trace(CLEO::eLogLevel level, const char* format, ...)
+    inline void Trace(CLEO::eLogLevel level, const char* format, ...)
     {
         va_list args;
         va_start(args, format);
@@ -532,7 +532,7 @@ namespace CLEO
         va_end(args);
     }
 
-    static void Trace(const CLEO::CRunningScript* thread, CLEO::eLogLevel level, const char* format, ...)
+    inline void Trace(const CLEO::CRunningScript* thread, CLEO::eLogLevel level, const char* format, ...)
     {
         if (thread != nullptr && CLEO_GetScriptVersion(thread) < CLEO::eCLEO_Version::CLEO_VER_5)
         {
@@ -545,7 +545,7 @@ namespace CLEO
         va_end(args);
     }
 
-    static void ShowError(const char* format, ...)
+    inline void ShowError(const char* format, ...)
     {
         va_list args;
         va_start(args, format);
@@ -572,7 +572,7 @@ namespace CLEO
         }
     }
 
-    static OpcodeResult TrySuspendScript(CLEO::CRunningScript* thread, bool canBeDisabled, const char* format, ...)
+    inline OpcodeResult TrySuspendScript(CLEO::CRunningScript* thread, bool canBeDisabled, const char* format, ...)
     {
         if (!CLEO_IsValidScriptPtr(thread))
         {
@@ -609,7 +609,7 @@ namespace CLEO
         return OpcodeResult::OR_INTERRUPT;
     }
 
-    static bool PluginCheckCleoVersion()
+    inline bool PluginCheckCleoVersion()
     {
         auto ver = CLEO_GetVersion();
 
@@ -625,7 +625,7 @@ namespace CLEO
         return true;
     }
 
-    static std::string GetParamInfo(int offset = 0)
+    inline std::string GetParamInfo(int offset = 0)
     {
         std::string info;
         info.resize(32);
@@ -661,7 +661,7 @@ namespace CLEO
         inline void* GetAddress() const { return address; }
     };
 
-    static MemPatch MemPatchJump(size_t position, void* jumpTarget)
+    inline MemPatch MemPatchJump(size_t position, void* jumpTarget)
     {
         MemPatch original((void*)position, 5);
 
@@ -673,7 +673,7 @@ namespace CLEO
         return original;
     }
 
-    static void* MemPatchCall(size_t position, void* newFunction)
+    inline void* MemPatchCall(size_t position, void* newFunction)
     {
         *(BYTE*)position = 0xE8; // asm: call
         position += sizeof(BYTE);
@@ -684,7 +684,7 @@ namespace CLEO
         return (void*)original;
     }
 
-    template <typename T> static StringList CreateStringList(const T& container)
+    template <typename T> inline StringList CreateStringList(const T& container)
     {
         StringList result;
         result.count   = 0;
@@ -709,15 +709,15 @@ namespace CLEO
 
 #define TRACE(format, ...)                                                                                             \
     {                                                                                                                  \
-        CLEO::Trace(CLEO::eLogLevel::Default, format, __VA_ARGS__);                                                    \
+        CLEO::Trace(CLEO::eLogLevel::Default, format __VA_OPT__(, ) __VA_ARGS__);                                      \
     }
 #define LOG_WARNING(script, format, ...)                                                                               \
     {                                                                                                                  \
-        CLEO::Trace(script, CLEO::eLogLevel::Error, format, __VA_ARGS__);                                              \
+        CLEO::Trace(script, CLEO::eLogLevel::Error, format __VA_OPT__(, ) __VA_ARGS__);                                \
     }
 #define SHOW_ERROR(a, ...)                                                                                             \
     {                                                                                                                  \
-        CLEO::ShowError(a, __VA_ARGS__);                                                                               \
+        CLEO::ShowError(a __VA_OPT__(, ) __VA_ARGS__);                                                                 \
     }
 
 #define SUSPEND(...)                                                                                                   \
@@ -757,11 +757,11 @@ namespace CLEO
 #define OPCODE_CONDITION_RESULT(value) CLEO_SetThreadCondResult(thread, value);
 
     // opcode param handling utils internal
-    static SCRIPT_VAR* _paramsArray       = nullptr;
-    static eDataType _lastParamType       = eDataType::DT_END;
-    static eArrayType _lastParamArrayType = eArrayType::AT_NONE;
+    inline SCRIPT_VAR* _paramsArray       = nullptr;
+    inline eDataType _lastParamType       = eDataType::DT_END;
+    inline eArrayType _lastParamArrayType = eArrayType::AT_NONE;
 
-    static SCRIPT_VAR& _readParam(CRunningScript* thread)
+    inline SCRIPT_VAR& _readParam(CRunningScript* thread)
     {
         _lastParamType      = thread->PeekDataType();
         _lastParamArrayType = thread->PeekArrayType();
@@ -771,7 +771,7 @@ namespace CLEO
         return _paramsArray[0];
     }
 
-    static SCRIPT_VAR& _readParamFloat(CRunningScript* thread)
+    inline SCRIPT_VAR& _readParamFloat(CRunningScript* thread)
     {
         auto& var = _readParam(thread);
 
@@ -787,7 +787,7 @@ namespace CLEO
         return var;
     }
 
-    static SCRIPT_VAR* _readParamVariable(CRunningScript* thread)
+    inline SCRIPT_VAR* _readParamVariable(CRunningScript* thread)
     {
         _lastParamType      = thread->PeekDataType();
         _lastParamArrayType = thread->PeekArrayType();
@@ -795,7 +795,7 @@ namespace CLEO
         return CLEO_GetPointerToScriptVariable(thread);
     }
 
-    static StringParamBufferInfo _readParamStringInfo(CRunningScript* thread)
+    inline StringParamBufferInfo _readParamStringInfo(CRunningScript* thread)
     {
         _lastParamType      = thread->PeekDataType();
         _lastParamArrayType = thread->PeekArrayType();
@@ -805,7 +805,7 @@ namespace CLEO
         return result;
     }
 
-    static void _writeParamPtr(CRunningScript* thread, void* valuePtr)
+    inline void _writeParamPtr(CRunningScript* thread, void* valuePtr)
     {
         _lastParamType      = thread->PeekDataType();
         _lastParamArrayType = thread->PeekArrayType();
@@ -815,7 +815,7 @@ namespace CLEO
         CLEO_RecordOpcodeParams(thread, 1);
     }
 
-    template <typename T> static void _writeParam(CRunningScript* thread, T value)
+    template <typename T> inline void _writeParam(CRunningScript* thread, T value)
     {
         _lastParamType      = thread->PeekDataType();
         _lastParamArrayType = thread->PeekArrayType();
@@ -826,7 +826,7 @@ namespace CLEO
         CLEO_RecordOpcodeParams(thread, 1);
     }
 
-    static inline bool _paramWasInt(bool output = false)
+    inline bool _paramWasInt(bool output = false)
     {
         if (_lastParamArrayType != eArrayType::AT_NONE) return _lastParamArrayType == eArrayType::AT_INT;
         if (IsVariable(_lastParamType)) return true;
@@ -834,7 +834,7 @@ namespace CLEO
         return false;
     }
 
-    static inline bool _paramWasFloat(bool output = false)
+    inline bool _paramWasFloat(bool output = false)
     {
         if (_lastParamArrayType != eArrayType::AT_NONE) return _lastParamArrayType == eArrayType::AT_FLOAT;
         if (IsVariable(_lastParamType)) return true;
@@ -842,7 +842,7 @@ namespace CLEO
         return false;
     }
 
-    static inline bool _paramWasString(bool output = false)
+    inline bool _paramWasString(bool output = false)
     {
         if (_lastParamArrayType != eArrayType::AT_NONE)
         {
@@ -860,12 +860,12 @@ namespace CLEO
         return false;
     }
 
-    static inline bool _paramWasVariable()
+    inline bool _paramWasVariable()
     {
         return IsVariable(_lastParamType);
     }
 
-    static const char* _readParamText(CRunningScript* thread, char* buffer, size_t bufferSize)
+    inline const char* _readParamText(CRunningScript* thread, char* buffer, size_t bufferSize)
     {
         _lastParamType      = thread->PeekDataType();
         _lastParamArrayType = thread->PeekArrayType();
@@ -908,7 +908,7 @@ namespace CLEO
         return str;
     }
 
-    static bool _writeParamText(CLEO::CRunningScript* thread, const StringParamBufferInfo& target, const char* str)
+    inline bool _writeParamText(CLEO::CRunningScript* thread, const StringParamBufferInfo& target, const char* str)
     {
         if (str != nullptr && (size_t)str <= MinValidAddress)
         {
@@ -946,7 +946,7 @@ namespace CLEO
         return true;
     }
 
-    static bool _writeParamText(CRunningScript* thread, const char* str)
+    inline bool _writeParamText(CRunningScript* thread, const char* str)
     {
         _lastParamType      = thread->PeekDataType();
         _lastParamArrayType = thread->PeekArrayType();
@@ -1065,7 +1065,7 @@ namespace CLEO
 
 #define OPCODE_READ_PARAM_STRING(_varName)                                                                             \
     char _buff_##_varName[MAX_STR_LEN + 1];                                                                            \
-    const char*##_varName = _readParamText(thread, _buff_##_varName, MAX_STR_LEN + 1);                                 \
+    const char* _varName = _readParamText(thread, _buff_##_varName, MAX_STR_LEN + 1);                                  \
     if (!_paramWasString())                                                                                            \
     {                                                                                                                  \
         return OpcodeResult::OR_INTERRUPT;                                                                             \
@@ -1073,8 +1073,8 @@ namespace CLEO
 
 #define OPCODE_READ_PARAM_STRING_LEN(_varName, _maxLen)                                                                \
     char _buff_##_varName[_maxLen + 1];                                                                                \
-    const char*##_varName = _readParamText(thread, _buff_##_varName, _maxLen + 1);                                     \
-    if (##_varName != nullptr) ##_varName = _buff_##_varName;                                                          \
+    const char* _varName = _readParamText(thread, _buff_##_varName, _maxLen + 1);                                      \
+    if (_varName != nullptr) _varName = _buff_##_varName;                                                              \
     if (!_paramWasString())                                                                                            \
     {                                                                                                                  \
         return OpcodeResult::OR_INTERRUPT;                                                                             \
@@ -1088,7 +1088,7 @@ namespace CLEO
         return OpcodeResult::OR_INTERRUPT;                                                                             \
     }                                                                                                                  \
     char _varName[2 * MAX_STR_LEN + 1];                                                                                \
-    char* _varName##Ok = CLEO_ReadParamsFormatted(thread, _buff_format_##_varName, _varName, sizeof(_varName));        \
+    char* _varName##Ok = CLEO_ReadParamsFormatted(thread, _format_##_varName, _varName, sizeof(_varName));             \
     if (_varName##Ok == nullptr)                                                                                       \
     {                                                                                                                  \
         SUSPEND("Invalid formatted string");                                                                           \
@@ -1104,15 +1104,15 @@ namespace CLEO
 
 #define OPCODE_READ_PARAM_FILEPATH(_varName)                                                                           \
     char _buff_##_varName[512];                                                                                        \
-    const char*##_varName = _readParamText(thread, _buff_##_varName, 512);                                             \
-    if (##_varName != nullptr) ##_varName = _buff_##_varName;                                                          \
+    const char* _varName = _readParamText(thread, _buff_##_varName, 512);                                              \
+    if (_varName != nullptr) _varName = _buff_##_varName;                                                              \
     if (_paramWasString())                                                                                             \
         CLEO_ResolvePath(thread, _buff_##_varName, 512);                                                               \
     else                                                                                                               \
         return OpcodeResult::OR_INTERRUPT;                                                                             \
-    if (!FilepathIsSafe(thread, ##_varName))                                                                           \
+    if (!FilepathIsSafe(thread, _varName))                                                                             \
     {                                                                                                                  \
-        SUSPEND("Forbidden file path '%s' outside game directories", ##_varName);                                      \
+        SUSPEND("Forbidden file path '%s' outside game directories", _varName);                                        \
     }
 
 #define OPCODE_READ_PARAM_PTR()                                                                                        \

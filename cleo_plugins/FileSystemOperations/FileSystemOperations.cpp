@@ -679,7 +679,7 @@ class FileSystemOperations
         }
 
         auto readCount = File::read(handle, destination, size);
-        if (readCount != size)
+        if (readCount != (DWORD)size)
         {
             OPCODE_CONDITION_RESULT(false);
             return OR_CONTINUE;
@@ -709,7 +709,7 @@ class FileSystemOperations
 
         auto readCount = File::write(handle, source, size);
 
-        OPCODE_CONDITION_RESULT(readCount == size);
+        OPCODE_CONDITION_RESULT(readCount == (DWORD)size);
         return OR_CONTINUE;
     }
 

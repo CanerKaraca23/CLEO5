@@ -83,7 +83,7 @@ class Audio
         CLEO_UnregisterCallback(eCallbackId::MainWindowFocus, OnMainWindowFocus);
     }
 
-    static void __stdcall OnGameBegin(DWORD saveSlot) { soundSystem.Init(); }
+    static void __stdcall OnGameBegin([[maybe_unused]] DWORD saveSlot) { soundSystem.Init(); }
 
     static void __stdcall OnGameProcessAfter() { soundSystem.Process(); }
 

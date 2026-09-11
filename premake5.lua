@@ -8,18 +8,29 @@ workspace "CLEO5"
     multiprocessorcompile "On"
     rtti "Off"
     intrinsics "On"
+    vectorextensions "SSE2"
+    largeaddressaware "On"
     functionlevellinking "On"
-    warnings "Default"
+    stringpooling "On"
+    warnings "Extra"
     fatalwarnings { "All" }
+
+    flags { "NoManifest" }
 
     defines {
         "NOMINMAX",
+        "WIN32_LEAN_AND_MEAN",
+        "_USE_MATH_DEFINES",
         "RW",
         "GTASA"
     }
 
     buildoptions {
-        "/Zc:threadSafeInit-"
+        "/Zc:threadSafeInit-",
+        "/Zc:__cplusplus",
+        "/Zc:preprocessor",
+        "/utf-8",
+        "/Gw"
     }
 
     linkoptions {

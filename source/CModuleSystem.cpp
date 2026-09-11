@@ -52,7 +52,9 @@ bool CModuleSystem::LoadFile(const char* path)
 bool CModuleSystem::LoadDirectory(const char* path)
 {
     bool result = true;
-    FilesWalk(path, ".s", [&](const char* fullPath, const char* filename) { result &= LoadFile(fullPath); });
+    FilesWalk(path, ".s", [&](const char* fullPath, [[maybe_unused]] const char* filename) {
+        result &= LoadFile(fullPath);
+    });
 
     return result;
 }
@@ -71,7 +73,7 @@ void CModuleSystem::NormalizePath(std::string& path)
         if (c == '/') c = '\\';
 
         // lower case
-        c = std::tolower(c);
+        c = (char)std::tolower(static_cast<unsigned char>(c));
     };
 }
 
@@ -320,6 +322,6 @@ void CModuleSystem::CModule::ModuleExport::NormalizeName(std::string& name)
 {
     for (auto& ch : name)
     {
-        ch = std::tolower(ch);
+        ch = (char)std::tolower(static_cast<unsigned char>(ch));
     }
 }

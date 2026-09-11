@@ -101,7 +101,7 @@ class DebugUtils
 
     // ---------------------------------------------- event callbacks -------------------------------------------------
 
-    static void WINAPI OnGameBegin(DWORD saveSlot)
+    static void WINAPI OnGameBegin([[maybe_unused]] DWORD saveSlot)
     {
         screenLog.Clear();
         SetCurrScript(nullptr);
@@ -210,11 +210,11 @@ class DebugUtils
         return true;
     }
 
-    static void WINAPI OnScriptProcessAfter(CRunningScript* pScript) { SetCurrScript(nullptr); }
+    static void WINAPI OnScriptProcessAfter([[maybe_unused]] CRunningScript* pScript) { SetCurrScript(nullptr); }
 
     static void WINAPI OnGameProcessAfter() { SetCurrScript(nullptr); }
 
-    static OpcodeResult WINAPI OnScriptOpcodeProcessBefore(CRunningScript* thread, DWORD opcode)
+    static OpcodeResult WINAPI OnScriptOpcodeProcessBefore(CRunningScript* thread, [[maybe_unused]] DWORD opcode)
     {
         // check current script
         SetCurrScript(thread);

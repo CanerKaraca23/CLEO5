@@ -15,12 +15,12 @@ CCustomScript::CCustomScript(const char* szFileName, bool bIsMiss, CRunningScrip
     TRACE(""); // separator
     TRACE("Loading custom script '%s'...", szFileName);
 
-    bIsCustom  = true;
+    bIsCustom     = true;
+    bIsProcessing = false;
     bIsMission = bUseMissionCleanup = bIsMiss;
 
     try
     {
-        std::ifstream is;
         if (label != 0) // Create external from label.
         {
             if (!parent) throw std::logic_error("Trying to create external thread from label without parent thread");
@@ -424,9 +424,9 @@ std::string CCustomScript::GetInfoStr(bool currLineInfo) const
             {
                 ss << " \nPreviously called command: ";
 
-                auto commandName = CleoInstance.OpcodeInfoDb.GetCommandName(CCustomOpcodeSystem::prevOpcode);
-                if (commandName)
-                    ss << commandName;
+                auto prevCommandName = CleoInstance.OpcodeInfoDb.GetCommandName(CCustomOpcodeSystem::prevOpcode);
+                if (prevCommandName)
+                    ss << prevCommandName;
                 else
                     ss << "[" << std::hex << std::uppercase << std::setw(4) << std::setfill('0')
                        << CCustomOpcodeSystem::prevOpcode << "]";

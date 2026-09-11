@@ -812,7 +812,7 @@ bool ScriptLog::OnScriptProcessBefore(CLEO::CRunningScript* script)
     return true;
 }
 
-void ScriptLog::OnScriptProcessAfter(CLEO::CRunningScript* script)
+void ScriptLog::OnScriptProcessAfter([[maybe_unused]] CLEO::CRunningScript* script)
 {
     SetCurrScript(nullptr);
 }

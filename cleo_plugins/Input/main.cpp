@@ -105,7 +105,7 @@ class Input
                 break;        // do not use scan code
 
             default:
-                input.ki.wScan = MapVirtualKey(vKey, MAPVK_VK_TO_VSC_EX);
+                input.ki.wScan = (WORD)MapVirtualKey(vKey, MAPVK_VK_TO_VSC_EX);
                 input.ki.dwFlags |= KEYEVENTF_EXTENDEDKEY;
             }
         }
@@ -279,7 +279,7 @@ class Input
             SUSPEND("Invalid key code (%d) used", key);
         }
 
-        SendKeyEvent(key, true);
+        SendKeyEvent(static_cast<BYTE>(key), true);
 
         return OR_CONTINUE;
     }
@@ -299,7 +299,7 @@ class Input
             SUSPEND("Invalid key code (%d) used", key);
         }
 
-        SendKeyEvent(key, false);
+        SendKeyEvent(static_cast<BYTE>(key), false);
 
         return OR_CONTINUE;
     }

@@ -15,7 +15,7 @@ class ScreenLog
     ScreenLog();
 
     void Init();
-    void Add(eLogLevel level, const char* msg);
+    void Add(eLogLevel msgLevel, const char* msg);
     void Clear();
     void Draw();
     void DrawLine(const char* msg, size_t row = 0);
@@ -47,7 +47,7 @@ class ScreenLog
 
         Entry() : level(eLogLevel::Default), msg(""), timeLeft(0.0f), repeats(1) {}
 
-        Entry(eLogLevel level, const char* msg) : level(level), repeats(1)
+        Entry(eLogLevel entryLevel, const char* msg) : level(entryLevel), repeats(1)
         {
             if (msg != nullptr)
             {

@@ -225,7 +225,7 @@ namespace CLEO
 
         void WINAPI CLEO_RetrieveOpcodeParams(CLEO::CRunningScript* thread, int count)
         {
-            CScriptEngine::GetScriptParams(thread, count);
+            CScriptEngine::GetScriptParams(thread, static_cast<BYTE>(count));
         }
 
         DWORD WINAPI CLEO_GetIntOpcodeParam(CLEO::CRunningScript* thread)
@@ -399,7 +399,7 @@ namespace CLEO
                 }
             }
 
-            CleoInstance.OpcodeSystem.handledParamCount += count;
+            CleoInstance.OpcodeSystem.handledParamCount += static_cast<BYTE>(count);
         }
 
         void WINAPI CLEO_SkipUnusedVarArgs(CLEO::CRunningScript* thread)
@@ -409,7 +409,7 @@ namespace CLEO
 
         void WINAPI CLEO_RecordOpcodeParams(CLEO::CRunningScript* thread, int count)
         {
-            CScriptEngine::SetScriptParams(thread, count);
+            CScriptEngine::SetScriptParams(thread, static_cast<BYTE>(count));
         }
 
         void WINAPI CLEO_SetIntOpcodeParam(CLEO::CRunningScript* thread, DWORD value)
@@ -483,7 +483,7 @@ namespace CLEO
             return (DWORD)GetScriptTexture(thread, id);
         }
 
-        DWORD WINAPI CLEO_GetInternalAudioStream(CLEO::CRunningScript* unused, DWORD audioStreamPtr)
+        DWORD WINAPI CLEO_GetInternalAudioStream([[maybe_unused]] CLEO::CRunningScript* unused, DWORD audioStreamPtr)
         {
             return *(DWORD*)(audioStreamPtr + 0x4); // CAudioStream->streamInternal
         }

@@ -24,7 +24,7 @@ class CDebug
     void Trace(CLEO::eLogLevel level, const char* msg);
 
   private:
-    unsigned int lastFrame = -1;
+    unsigned int lastFrame = static_cast<unsigned int>(-1);
     std::mutex mutex;
     std::ofstream m_hFile;
 };

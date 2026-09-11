@@ -29,14 +29,14 @@ void ScreenLog::Init()
         CRGBA(CLEO_GetConfigInt("DebugUtils.ScreenLog.ColorSystem", fontColor[(size_t)eLogLevel::Default].ToInt()));
 }
 
-void ScreenLog::Add(eLogLevel level, const char* msg)
+void ScreenLog::Add(eLogLevel msgLevel, const char* msg)
 {
-    if (level > this->level)
+    if (msgLevel > this->level)
     {
         return;
     }
 
-    Entry entry(level, msg);
+    Entry entry(msgLevel, msg);
     if (!entries.empty() && entries.front() == entry)
     {
         entries.front().Repeat(); // duplicated
@@ -152,7 +152,7 @@ void ScreenLog::Draw()
 
         CFont::SetColor(color);
 
-        alpha = std::clamp(int(alpha * alpha) / 255, 0, 255); // corrected for fadeout
+        alpha = (BYTE)std::clamp(int(alpha * alpha) / 255, 0, 255); // corrected for fadeout
         CFont::SetDropColor(CRGBA(0, 0, 0, alpha));
 
         lines -= CountLines(entry.msg);

@@ -113,36 +113,28 @@ namespace CLEO
         CleoInstance.GameBegin(FrontEndMenuManager.m_nSelectedSaveGame);
     }
 
-    void __declspec(naked) CCleoInstance::OnGameShutdown()
+    void CCleoInstance::OnGameShutdown()
     {
         CleoInstance.GameEnd();
-        static DWORD oriFunc;
-        oriFunc = (DWORD)(CleoInstance.GameShutdown_Orig);
-        _asm jmp oriFunc
+        CleoInstance.GameShutdown_Orig();
     }
 
-    void __declspec(naked) CCleoInstance::OnGameRestart1()
+    void CCleoInstance::OnGameRestart1()
     {
         CleoInstance.GameEnd();
-        static DWORD oriFunc;
-        oriFunc = (DWORD)(CleoInstance.GameRestart1_Orig);
-        _asm jmp oriFunc
+        CleoInstance.GameRestart1_Orig();
     }
 
-    void __declspec(naked) CCleoInstance::OnGameRestart2()
+    void CCleoInstance::OnGameRestart2()
     {
         CleoInstance.GameEnd();
-        static DWORD oriFunc;
-        oriFunc = (DWORD)(CleoInstance.GameRestart2_Orig);
-        _asm jmp oriFunc
+        CleoInstance.GameRestart2_Orig();
     }
 
-    void __declspec(naked) CCleoInstance::OnGameRestart3()
+    void CCleoInstance::OnGameRestart3()
     {
         CleoInstance.GameEnd();
-        static DWORD oriFunc;
-        oriFunc = (DWORD)(CleoInstance.GameRestart3_Orig);
-        _asm jmp oriFunc
+        CleoInstance.GameRestart3_Orig();
     }
 
     void __cdecl CCleoInstance::OnDebugDisplayTextBuffer_Idle()
@@ -215,15 +207,15 @@ namespace CLEO
         PluginSystem.UnloadPlugins();
     }
 
-    void CCleoInstance::GameBegin(int saveSlot)
+    void CCleoInstance::GameBegin(int slot)
     {
         if (m_bGameInProgress) return;
         m_bGameInProgress = true;
 
         CConfigManager::Reset(); // re-read config file to apply any user changes made in background
 
-        CleoInstance.saveSlot = saveSlot;
-        TRACE("Starting new game session, save slot: %d", saveSlot);
+        CleoInstance.saveSlot = slot;
+        TRACE("Starting new game session, save slot: %d", slot);
 
         // log important config settings
         TRACE("Config summary:");

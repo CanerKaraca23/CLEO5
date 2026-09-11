@@ -86,13 +86,13 @@ class MemoryOperations
     {
         // release memory allocations
         TRACE("");
-        TRACE("Cleaning up %d allocated memory block(s):", Instance.m_allocations.size());
+        TRACE("Cleaning up %d allocated memory block(s):", (int)Instance.m_allocations.size());
         for (auto entry : Instance.m_scriptAllocationsInfo) // list remaining allocations per script
         {
             if (entry.second.count == 0) continue;
 
             std::string str(128, '\0');
-            CLEO_GetScriptInfoStr(entry.first, false, str.data(), str.length());
+            CLEO_GetScriptInfoStr(entry.first, false, str.data(), (DWORD)str.length());
             TRACE(
                 " %d block%s (%0.2f kB) in script %s", entry.second.count, entry.second.count > 1 ? "s" : "",
                 float(entry.second.size) / 1024, str.c_str()
@@ -108,13 +108,13 @@ class MemoryOperations
             return entry.second;
         });
         TRACE("");
-        TRACE("Cleaning up %d loaded libraries:", libCount);
+        TRACE("Cleaning up %d loaded libraries:", (int)libCount);
         for (auto& entry : Instance.m_libraries)
         {
             if (entry.second == 0) continue;
 
             std::string str(MAX_PATH, '\0');
-            GetModuleFileNameA(entry.first, str.data(), str.length());
+            GetModuleFileNameA(entry.first, str.data(), (DWORD)str.length());
             FilepathRemoveParent(str, CLEO_GetGameDirectory());
             TRACE(" %s", str.c_str());
 
@@ -132,14 +132,14 @@ class MemoryOperations
         m_allocations[address] = size;
         auto& info             = m_scriptAllocationsInfo[thread];
         info.count++;
-        info.size += size;
+        info.size += (int)size;
     }
 
     void UnregisterMemoryAllocation(CLEO::CRunningScript* thread, void* address)
     {
         auto& info = m_scriptAllocationsInfo[thread];
         info.count--;
-        info.size -= m_allocations[address];
+        info.size -= (int)m_allocations[address];
         m_allocations.erase(address);
     }
 
@@ -164,7 +164,7 @@ class MemoryOperations
                 SUSPEND("Size argument (%d) greater than supported (%d)", size, MAX_STR_LEN);
             }
 
-            ZeroMemory(buffer, size); // padd with zeros if size > length
+            ZeroMemory(buffer, (size_t)size); // padd with zeros if size > length
             source     = CLEO_ReadStringOpcodeParam(thread, buffer, sizeof(buffer));
             sourceText = true;
         }

@@ -2,10 +2,10 @@
 #include <Windows.h>
 #include <tlhelp32.h>
 
-static bool CleoSingletonChecked = false;
+inline bool CleoSingletonChecked = false;
 
 // search for CLEO.asi modules loaded, terminate game if duplicate found
-static void CleoSingletonCheck()
+inline void CleoSingletonCheck()
 {
     if (!CleoSingletonChecked)
     {

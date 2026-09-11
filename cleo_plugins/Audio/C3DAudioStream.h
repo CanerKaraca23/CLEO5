@@ -11,15 +11,15 @@ namespace CLEO
         // overloaded actions
         virtual bool Is3d() const { return true; }
         virtual void Set3dPosition(const CVector& pos);
-        virtual void Set3dSourceSize(float radius);
-        virtual void SetHost(CEntity* host, const CVector& offset);
+        virtual void Set3dSourceSize(float srcRadius);
+        virtual void SetHost(CEntity* pHost, const CVector& newOffset);
         virtual void Process();
         virtual float CalculateVolume();
         virtual float CalculateSpeed();
 
       protected:
         const float Volume_3D_Adjust = 0.5f; // match other ingame sound sources
-        static double CalculateDistanceDecay(float radius, float distance);
+        static double CalculateDistanceDecay(float srcRadius, float distance);
         static float CalculateDirectionDecay(const CVector& listenerDir, const CVector& relativePos);
 
         CEntity* host        = nullptr;

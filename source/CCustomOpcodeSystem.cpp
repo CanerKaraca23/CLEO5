@@ -29,7 +29,9 @@ namespace CLEO
     }
 
     // opcode handler for custom opcodes
-    OpcodeResult __fastcall CCustomOpcodeSystem::customOpcodeHandler(CRunningScript* thread, int dummy, WORD opcode)
+    OpcodeResult __fastcall CCustomOpcodeSystem::customOpcodeHandler(
+        CRunningScript* thread, [[maybe_unused]] int dummy, WORD opcode
+    )
     {
         prevOpcode        = (thread != lastScript) ? 0xFFFF : lastOpcode;
         lastScript        = thread;
@@ -1067,16 +1069,14 @@ namespace CLEO
         scmFunc->callArgCount = (BYTE)nParams;
 
         static SCRIPT_VAR arguments[32];
-        SCRIPT_VAR* locals       = thread->IsMission() ? missionLocals : thread->GetVarPtr();
-        SCRIPT_VAR* localsEnd    = locals + 32;
-        SCRIPT_VAR* storedLocals = scmFunc->savedTls;
+        SCRIPT_VAR* locals = thread->IsMission() ? missionLocals : thread->GetVarPtr();
 
         // collect arguments
         for (DWORD i = 0; i < nParams; i++)
         {
             SCRIPT_VAR* arg = arguments + i;
 
-            auto paramType = thread->PeekDataType();
+            paramType = thread->PeekDataType();
             if (IsImmInteger(paramType) || IsVariable(paramType))
             {
                 arg->dwParam = CLEO_GetIntOpcodeParam(thread);

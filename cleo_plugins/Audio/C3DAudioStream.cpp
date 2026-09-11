@@ -46,17 +46,17 @@ void C3DAudioStream::Set3dPosition(const CVector& pos)
     offset   = pos;
 }
 
-void C3DAudioStream::Set3dSourceSize(float radius)
+void C3DAudioStream::Set3dSourceSize(float srcRadius)
 {
-    this->radius = std::max<float>(radius, 0.01f);
+    this->radius = std::max<float>(srcRadius, 0.01f);
 }
 
-void C3DAudioStream::SetHost(CEntity* host, const CVector& offset)
+void C3DAudioStream::SetHost(CEntity* pHost, const CVector& newOffset)
 {
-    if (host != nullptr)
+    if (pHost != nullptr)
     {
-        this->host = host;
-        hostType   = (eEntityType)host->m_nType;
+        this->host = pHost;
+        hostType   = (eEntityType)pHost->m_nType;
     }
     else
     {
@@ -64,7 +64,7 @@ void C3DAudioStream::SetHost(CEntity* host, const CVector& offset)
         hostType   = ENTITY_TYPE_NOTHING;
     }
 
-    this->offset = offset;
+    this->offset = newOffset;
 }
 
 void C3DAudioStream::Process()
@@ -167,9 +167,9 @@ float C3DAudioStream::CalculateSpeed()
     return masterSpeed * speed.value();
 }
 
-double C3DAudioStream::CalculateDistanceDecay(float radius, float distance)
+double C3DAudioStream::CalculateDistanceDecay(float srcRadius, float distance)
 {
-    distance = std::max<float>(distance - radius, 0.0f);
+    distance = std::max<float>(distance - srcRadius, 0.0f);
 
     // exact match to ingame sounds
     /*float factor = 1.0f / powf(1.0f + distance, 2); // inverse square

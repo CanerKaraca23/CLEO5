@@ -78,7 +78,7 @@ namespace CLEO
         AT_STRING,     // variable with long string (16 char)
         AT_NONE = 0xFF // CLEO internal
     };
-    static const BYTE ArrayTypeMask =
+    constexpr BYTE ArrayTypeMask =
         AT_INT | AT_FLOAT | AT_TEXTLABEL |
         AT_STRING; // array flags byte contains other info too. Type needs to be masked when read
     enum eArrayTypeFlags : BYTE
@@ -86,7 +86,7 @@ namespace CLEO
         ATF_INDEX_GLOBAL = 0x80
     };
 
-    static const char* ToStr(eDataType type)
+    inline const char* ToStr(eDataType type)
     {
         switch (type)
         {
@@ -155,7 +155,7 @@ namespace CLEO
         }
     }
 
-    static bool IsImmInteger(eDataType type) // immediate/literal integer in code like 42
+    inline bool IsImmInteger(eDataType type) // immediate/literal integer in code like 42
     {
         switch (type)
         {
@@ -167,12 +167,12 @@ namespace CLEO
         return false;
     }
 
-    static bool IsImmFloat(eDataType type) // immediate/literal float in code like 42.0
+    inline bool IsImmFloat(eDataType type) // immediate/literal float in code like 42.0
     {
         return type == DT_FLOAT;
     }
 
-    static bool IsImmString(eDataType type) // immediate/literal string in code like "text"
+    inline bool IsImmString(eDataType type) // immediate/literal string in code like "text"
     {
         switch (type)
         {
@@ -184,7 +184,7 @@ namespace CLEO
         return false;
     }
 
-    static bool IsVarString(eDataType type) // string variable
+    inline bool IsVarString(eDataType type) // string variable
     {
         switch (type)
         {
@@ -201,7 +201,7 @@ namespace CLEO
         return false;
     }
 
-    static bool IsVariable(eDataType type) // can carry int, float, pointer to text
+    inline bool IsVariable(eDataType type) // can carry int, float, pointer to text
     {
         switch (type)
         {
@@ -214,7 +214,7 @@ namespace CLEO
         return false;
     }
 
-    static bool IsArray(eDataType type)
+    inline bool IsArray(eDataType type)
     {
         switch (type)
         {
@@ -228,7 +228,7 @@ namespace CLEO
         }
         return false;
     }
-    static const char* ToKindStr(eDataType type, eArrayType arrType = AT_NONE)
+    inline const char* ToKindStr(eDataType type, eArrayType arrType = AT_NONE)
     {
         switch (type)
         {
@@ -332,7 +332,7 @@ namespace CLEO
         OR_END,
     };
 
-    static eLogicalOperation& operator--(eLogicalOperation& o)
+    inline eLogicalOperation& operator--(eLogicalOperation& o)
     {
         if (o == eLogicalOperation::NONE)
         {
@@ -667,7 +667,7 @@ namespace CLEO
             bUseMissionCleanup = false;
             bIsExternal        = false;
             bTextBlockOverride = false;
-            bExternalType      = -1;
+            bExternalType      = 0xFF;
             memset(LocalVar, 0, sizeof(LocalVar));
             LogicalOp          = eLogicalOperation::NONE;
             NotFlag            = false;
@@ -677,6 +677,7 @@ namespace CLEO
             bIsMission         = false;
             ScmFunction        = 0;
             bIsCustom          = false;
+            bIsProcessing      = false;
         }
 
         bool IsActive() const { return bIsActive; }

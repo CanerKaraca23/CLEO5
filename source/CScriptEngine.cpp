@@ -4,7 +4,9 @@
 
 namespace CLEO
 {
-    const char* __fastcall GetScriptStringParam(CRunningScript* thread, int dummy, char* buff, int buffLen)
+    const char* __fastcall GetScriptStringParam(
+        CRunningScript* thread, [[maybe_unused]] int dummy, char* buff, int buffLen
+    )
     {
         if (buff == nullptr || buffLen < 0)
         {
@@ -202,7 +204,7 @@ namespace CLEO
 
         std::memset(thread, 0, sizeof(CLEO::CRunningScript)); // clear everything, including padding fields
         strcpy_s(thread->Name, "noname");
-        thread->bExternalType      = -1;
+        thread->bExternalType      = static_cast<BYTE>(-1);
         thread->bWastedBustedCheck = true;
     }
 

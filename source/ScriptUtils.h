@@ -6,7 +6,7 @@
 namespace CLEO
 {
     // check for extra SCM data at the end of script block
-    static DWORD GetExtraInfoSize(BYTE* scriptData, DWORD size)
+    inline DWORD GetExtraInfoSize(BYTE* scriptData, DWORD size)
     {
         static constexpr char SB_Footer_Sig[] = {'_', '_', 'S', 'B', 'F', 'T', 'R', '\0'};
 
@@ -24,7 +24,7 @@ namespace CLEO
     }
 
     // get pointer to arbitrary global or local variable
-    static SCRIPT_VAR* GetScriptVar(CLEO::CRunningScript* script, bool global, size_t index)
+    inline SCRIPT_VAR* GetScriptVar(CLEO::CRunningScript* script, bool global, size_t index)
     {
         SCRIPT_VAR* vars;
         if (global)

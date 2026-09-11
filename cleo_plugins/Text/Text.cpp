@@ -1,4 +1,4 @@
-﻿#include "plugin.h"
+#include "plugin.h"
 #include "CLEO.h"
 #include "CLEO_Utils.h"
 #include "ScriptDrawing.h"
@@ -103,7 +103,7 @@ class Text
         m_patchCTextGet.Apply(); // undo hook
     }
 
-    static void __stdcall OnGameBegin(DWORD saveSlot) { textManager.LoadFxts(); }
+    static void __stdcall OnGameBegin([[maybe_unused]] DWORD saveSlot) { textManager.LoadFxts(); }
 
     static void __stdcall OnGameProcessBefore() { genericLabelCounter = 0; }
 
@@ -136,7 +136,7 @@ class Text
     }
 
     // hook of game's CText::Get
-    static const char* __fastcall HOOK_CTextGet(CText* text, int dummy, const char* gxt)
+    static const char* __fastcall HOOK_CTextGet(CText* text, [[maybe_unused]] int edx, const char* gxt)
     {
         if ((gxt[0] == '\0') || (gxt[0] == ' ')) return "";
 
@@ -320,7 +320,7 @@ class Text
         auto& bigMessage = bigMessages[styleIdx];
 
         strncpy_s(bigMessage, text, sizeof(bigMessage) - 1);
-        CMessages::AddBigMessage(bigMessage, time, styleIdx);
+        CMessages::AddBigMessage(bigMessage, time, static_cast<unsigned short>(styleIdx));
         return OR_CONTINUE;
     }
 
@@ -362,7 +362,7 @@ class Text
         auto& bigMessage = bigMessages[styleIdx];
 
         strncpy_s(bigMessage, text, sizeof(bigMessage) - 1);
-        CMessages::AddBigMessage(bigMessage, time, styleIdx);
+        CMessages::AddBigMessage(bigMessage, time, static_cast<unsigned short>(styleIdx));
         return OR_CONTINUE;
     }
 
@@ -530,7 +530,7 @@ class Text
             if (p.used) OPCODE_WRITE_PARAM_VAR_STRING(p.target, p.str.c_str());
         }
 
-        OPCODE_CONDITION_RESULT(outputParamCount == *readCount);
+        OPCODE_CONDITION_RESULT(*readCount >= 0 && outputParamCount == static_cast<size_t>(*readCount));
         return OR_CONTINUE;
     }
 

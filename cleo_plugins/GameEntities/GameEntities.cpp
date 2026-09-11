@@ -64,7 +64,7 @@ class GameEntities
             return OR_CONTINUE;
         }
 
-        DWORD foundCar   = -1;
+        DWORD foundCar   = static_cast<DWORD>(-1);
         const auto& cars = ped->m_pIntelligence->m_vehicleScanner.m_apEntities;
         for (size_t i = 0; i < std::size(cars); i++)
         {
@@ -76,15 +76,15 @@ class GameEntities
             }
         }
 
-        DWORD foundPed   = -1;
+        DWORD foundPed   = static_cast<DWORD>(-1);
         const auto& peds = ped->m_pIntelligence->m_pedScanner.m_apEntities;
         for (size_t i = 0; i < std::size(peds); i++)
         {
-            auto ped = (CPed*)peds[i];
-            if (ped != nullptr && ped->m_nCreatedBy == 1 && // random pedestrian
-                !ped->bFadeOut)
+            auto pPed = (CPed*)peds[i];
+            if (pPed != nullptr && pPed->m_nCreatedBy == 1 && // random pedestrian
+                !pPed->bFadeOut)
             {
-                foundPed = CPools::GetPedRef(ped); // get handle
+                foundPed = CPools::GetPedRef(pPed); // get handle
                 break;
             }
         }
@@ -308,12 +308,12 @@ class GameEntities
         }
         else
         {
-            handle    = -1;
+            handle    = static_cast<DWORD>(-1);
             searchIdx = 0;
         }
 
         OPCODE_WRITE_PARAM_INT(handle);
-        OPCODE_CONDITION_RESULT(handle != -1);
+        OPCODE_CONDITION_RESULT(handle != static_cast<DWORD>(-1));
         return OR_CONTINUE;
     }
 
@@ -371,12 +371,12 @@ class GameEntities
         }
         else
         {
-            handle    = -1;
+            handle    = static_cast<DWORD>(-1);
             searchIdx = 0;
         }
 
         OPCODE_WRITE_PARAM_INT(handle);
-        OPCODE_CONDITION_RESULT(handle != -1);
+        OPCODE_CONDITION_RESULT(handle != static_cast<DWORD>(-1));
         return OR_CONTINUE;
     }
 
@@ -425,12 +425,12 @@ class GameEntities
         }
         else
         {
-            handle    = -1;
+            handle    = static_cast<DWORD>(-1);
             searchIdx = 0;
         }
 
         OPCODE_WRITE_PARAM_INT(handle);
-        OPCODE_CONDITION_RESULT(handle != -1);
+        OPCODE_CONDITION_RESULT(handle != static_cast<DWORD>(-1));
         return OR_CONTINUE;
     }
 } Instance;

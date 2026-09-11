@@ -35,7 +35,7 @@ namespace CLEO
         void Start();
         void Stop();
 
-        void GameBegin(int saveSlot);
+        void GameBegin(int slot);
         void GameEnd();
 
         bool IsStarted() const { return m_isStarted; }

@@ -329,7 +329,7 @@ char File::readChar(DWORD handle)
         }
     }
     else
-        result = fgetc(file);
+        result = static_cast<char>(fgetc(file));
 
     updateState(handle);
 
@@ -461,7 +461,7 @@ DWORD File::scan(DWORD handle, const char* format, void** outputParams)
 
             if (!isOk(handle)) break;
 
-            if (read == paramCount)
+            if (read >= 0 && static_cast<size_t>(read) == paramCount)
             {
                 if (charRead == prevCharRead) // all params collected and scan doesn't consume input text anymore
                 {

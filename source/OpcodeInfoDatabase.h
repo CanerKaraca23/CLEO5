@@ -41,7 +41,7 @@ class OpcodeInfoDatabase
     {
         std::string extension = "?"; // CLEO plugin name
 
-        uint16_t id           = -1; // opcode
+        uint16_t id           = 0xFFFF; // opcode
         std::string name      = "?";
         std::string nameLower = "?"; // same but lower case
 
@@ -53,7 +53,7 @@ class OpcodeInfoDatabase
         std::vector<CommandArgument> arguments; // input and output params
         size_t inputArguments = 0;              // count
 
-        bool NameEqual(const char* name) const { return _strcmpi(name, this->name.c_str()) == 0; }
+        bool NameEqual(const char* otherName) const { return _strcmpi(otherName, this->name.c_str()) == 0; }
         bool IsComparison() const
         {
             if (!isCondition || oper.empty()) return false;
