@@ -17,18 +17,40 @@ workspace "CLEO5"
     defines {
         "NOMINMAX",
         "RW",
-        "GTASA"
+        "GTASA",
+        "WIN32_LEAN_AND_MEAN",
+        "_USE_MATH_DEFINES"
     }
 
     buildoptions {
+        "/options:strict",
+        "/Zc:__cplusplus",
+        "/Zc:preprocessor",
+        "/utf-8",
+        "/EHsc",
+        "/Gw",
         "/Zc:threadSafeInit-",
+        "/Zc:inline",
+        "/Zc:throwingNew",
+        "/Zc:templateScope",
+        "/volatile:iso",
+        "/Qfast_transcendentals",
+        "/fp:contract",
+        "/fpcvt:IA",
+        "/Zc:enumTypes",
+        "/Zc:enumEncoding",
+        "/Zc:checkGwOdr",
         "/sdl",
         "/we26815",
         '/D"TARGET_NAME=R\\"($(TargetName))\\""'
     }
 
     linkoptions {
-        "/SAFESEH:NO"
+        "/SAFESEH:NO",
+        "/LARGEADDRESSAWARE",
+        "/DYNAMICBASE:NO",
+        "/NXCOMPAT:NO",
+        "/MANIFEST:NO"
     }
 
     debugcommand "$(GTA_SA_DIR)\\gta_sa.exe"
@@ -40,10 +62,25 @@ workspace "CLEO5"
         optimize "Off"
 
     filter "configurations:Release"
-        defines { "_NDEBUG" }
+        defines {
+            "_NDEBUG",
+            "_ITERATOR_DEBUG_LEVEL=0"
+        }
         optimize "Speed"
         linktimeoptimization "On"
         symbols "Off"
+        buildoptions {
+            "/GL",
+            "/Zo",
+            "/Ob3",
+            "/Oy-"
+        }
+        linkoptions {
+            "/INCREMENTAL:NO",
+            "/LTCG",
+            "/OPT:REF,ICF",
+            "/RELEASE"
+        }
 
     filter {}
 
