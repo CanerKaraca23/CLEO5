@@ -6,6 +6,8 @@ workspace "CLEO5"
     language "C++"
     cppdialect "C++latest"
     staticruntime "On"
+    manifest "Off"
+    largeaddressaware "On"
     multiprocessorcompile "On"
     rtti "On"
     intrinsics "On"
@@ -21,14 +23,21 @@ workspace "CLEO5"
     }
 
     buildoptions {
+        "/Zc:__cplusplus",
+        "/utf-8",
+        "/Gw",
         "/Zc:threadSafeInit-",
+        "/Zc:throwingNew",
+        "/Zc:checkGwOdr",
         "/sdl",
         "/we26815",
         '/D"TARGET_NAME=R\\"($(TargetName))\\""'
     }
 
     linkoptions {
-        "/SAFESEH:NO"
+        "/SAFESEH:NO",
+        "/DYNAMICBASE:NO",
+        "/NXCOMPAT:NO"
     }
 
     debugcommand "$(GTA_SA_DIR)\\gta_sa.exe"
@@ -40,10 +49,21 @@ workspace "CLEO5"
         optimize "Off"
 
     filter "configurations:Release"
-        defines { "_NDEBUG" }
+        defines {
+            "_NDEBUG",
+            "_ITERATOR_DEBUG_LEVEL=0"
+        }
         optimize "Speed"
         linktimeoptimization "On"
         symbols "Off"
+        omitframepointer "Off"
+        buildoptions {
+            "/Zo",
+            "/Ob3"
+        }
+        linkoptions {
+            "/RELEASE"
+        }
 
     filter {}
 
